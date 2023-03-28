@@ -53,9 +53,12 @@ class Directory {
         this.paths = Object.keys(contents);
     }
 
-    transverse (next) {
+    transverse (next, err = true) {
         let path = this.paths.indexOf(next);
-        if (next === -1) throw new Error("invalid path", next);
+        if (next === -1) {
+            if (err) throw new Error("invalid path", next);
+            else return false;
+        }
         return this.contents[path];
     }
 

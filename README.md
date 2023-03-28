@@ -21,6 +21,7 @@ jest.mock('fs', mockFS({
 
 The following fs functions have been mocked till now:
 * `existsSync`
+    * `_path_`
 * `readFileSync`
     * _`path`_
     * _`options`_
