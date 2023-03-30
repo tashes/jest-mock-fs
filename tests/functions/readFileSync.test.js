@@ -9,7 +9,7 @@ describe('Testing readFileSync', () => {
     });
     
     test('Expecting readFileSync to return jest function', () => {
-        let fn = readFileSync(new Directory('', {
+        let fn = readFileSync(new Directory('root', {
             'file.ext': "HELLO!",
             'anotherpath': {
                 'file.ext': "ANOTHERHELLO!"
@@ -23,7 +23,7 @@ describe('Testing readFileSync', () => {
     describe('Testing mock function', () => {
 
         test('Expecting mock function to return correct result', () => {
-            let fn = readFileSync(new Directory('', {
+            let fn = readFileSync(new Directory('root', {
                 'file.ext': "HELLO!",
                 'anotherpath': {
                     'file.ext': "ANOTHERHELLO!"
@@ -34,7 +34,7 @@ describe('Testing readFileSync', () => {
         });
 
         test('Expecting mock function to capture mock data', () => {
-            let fn = readFileSync(new Directory('', {
+            let fn = readFileSync(new Directory('root', {
                 'file.ext': "HELLO!",
                 'anotherpath': {
                     'file.ext': "ANOTHERHELLO!"
