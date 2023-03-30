@@ -1,4 +1,4 @@
-const { isObject, isString } = require("./checks");
+const { isObject, isString, checkConfigPath } = require("./checks");
 const { extname, basename } = require('path');
 
 class File {
@@ -25,12 +25,18 @@ class File {
         this.contents = contents;
     }
 
+    toObject () {
+        return this.contents;
+    }
+
 };
 
 class Directory {
 
     constructor (name, contents) {
 
+        let [ nameCheck, nameCheckError ] = checkConfigPath(name);
+        if (nameCheck === false) throw nameCheckError;
         this.name = name;
 
         this.contents = Object.keys(contents).map(pathname => {
@@ -53,6 +59,18 @@ class Directory {
         this.paths = Object.keys(contents);
     }
 
+    add (item) {
+        this.contents.push(item);
+        this.paths.push(item.name);
+    }
+
+    remove (name) {
+        let index = this.paths.findIndex(pathname => pathname === name);
+
+        this.contents.splice(index, 1);
+        this.paths.splice(index, 1);
+    }
+
     transverse (next, err = true) {
         let path = this.paths.indexOf(next);
         if (next === -1) {
@@ -60,6 +78,14 @@ class Directory {
             else return false;
         }
         return this.contents[path];
+    }
+
+    toObject () {
+        let obj = this.paths.reduce((ass, path, i) => {
+            ass[path] = this.contents[i].toObject();
+            return ass;
+        }, {});
+        return obj;
     }
 
 };

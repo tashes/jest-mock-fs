@@ -58,6 +58,16 @@ describe('Testing File', () => {
 
     });
 
+    describe('Testing toObject', () => {
+
+        test('Expecting correct values to result in correct return value', () => {
+            let file = new File('newfile.ext', "HELLO!");
+
+            expect(file.toObject()).toStrictEqual(Buffer.from("HELLO!"));
+        });
+
+    });
+
 });
 
 describe('Testing Directory', () => {
@@ -111,6 +121,30 @@ describe('Testing Directory', () => {
 
     });
 
+    describe('Testing remove', () => {
+        
+        test('Expecting correct values to return correct values', () => {
+            let directory = new Directory('newdirectory', {
+                'file.ext': "HELLO!",
+                'anotherpath': {
+                    'file.ext': "ANOTHERHELLO!"
+                }
+            });
+
+            directory.remove('file.ext');
+
+            expect(directory.contents).toStrictEqual([
+                new Directory("anotherpath", {
+                    'file.ext': "ANOTHERHELLO!"
+                })
+            ]);
+            expect(directory.paths).toStrictEqual([
+                'anotherpath'
+            ]);
+        });
+
+    });
+
     describe('Testing transverse', () => {
 
         test('Expecting correct values to return correct values', () => {
@@ -122,6 +156,26 @@ describe('Testing Directory', () => {
             });
 
             expect(directory.transverse('file.ext')).toStrictEqual(new File('file.ext', Buffer.from("HELLO!")))
+        });
+
+    });
+
+    describe('Testing toObject', () => {
+
+        test('Expecting correct values to result in correct return value', () => {
+            let directory = new Directory('newdirectory', {
+                'file.ext': "HELLO!",
+                'anotherpath': {
+                    'file.ext': "ANOTHERHELLO!"
+                }
+            });
+
+            expect(directory.toObject()).toStrictEqual({
+                'file.ext': Buffer.from("HELLO!"),
+                'anotherpath': {
+                    'file.ext': Buffer.from("ANOTHERHELLO!")
+                }
+            });
         });
 
     });
