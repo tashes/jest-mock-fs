@@ -22,7 +22,15 @@ module.exports = function (fs) {
         let components = componentize(path);
         // transverse fs
         let obj = fs;
+        let parent = null;
+        if (components[0] === '.') {
+            components[0] = obj.name;
+            let directoryBuilder = {};
+            directoryBuilder[obj.name] = obj;
+            obj = new Directory('__root__', directoryBuilder);
+        }
         for (let i = 0; i < components.length; i++) {
+            parent = obj;
             obj = obj.transverse(components[i]);
         }
 
@@ -31,7 +39,10 @@ module.exports = function (fs) {
                 throw new Error('EISDIR: illegal operation on a directory, read <directory>');
             }
             else {
-                throw new Error('invalid file');
+                // Create file here
+                let name = components[components.length - 1];
+                let file = new File(name, contents);
+                parent.add(file);
             }
         }
 

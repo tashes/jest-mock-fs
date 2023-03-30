@@ -9,7 +9,7 @@ describe('Testing writeFileSync', () => {
     });
 
     test('Expecting writeFileSync to return jest function', () => {
-        let fn = writeFileSync(new Directory('', {
+        let fn = writeFileSync(new Directory('root', {
             'file.ext': "HELLO!",
             'anotherpath': {
                 'file.ext': "ANOTHERHELLO!"
@@ -23,7 +23,7 @@ describe('Testing writeFileSync', () => {
     describe('Testing mock function', () => {
 
         test('Expecting mock function to return correct result', () => {
-            let fs = new Directory('', {
+            let fs = new Directory('root', {
                 'file.ext': "HELLO!",
                 'anotherpath': {
                     'file.ext': "ANOTHERHELLO!"
@@ -36,7 +36,7 @@ describe('Testing writeFileSync', () => {
         });
 
         test('Expecting mock function to capture mock data', () => {
-            let fs = new Directory('', {
+            let fs = new Directory('root', {
                 'file.ext': "HELLO!",
                 'anotherpath': {
                     'file.ext': "ANOTHERHELLO!"
