@@ -20,18 +20,27 @@ jest.mock('fs', mockFS({
 ```
 
 The following fs functions have been mocked till now:
-* `existsSync`
+* [x] `existsSync`
     * `_path_`
-* `readFileSync`
+* [x] `readFileSync`
     * _`path`_
     * _`options`_
         * _`encoding`_
-* `writeFileSync`
+* [x] `writeFileSync`
     * _`path`_
     * _`contents`_
     * _`options`_
         * - _`encoding`_
-* `unlinkSync`
-* `readdirSync`
-* `mkdirSync`
-* `rmSync`
+* [x] `unlinkSync`
+    * _`path`_
+* [x] `readdirSync`
+    * -`path`
+* [x] `mkdirSync`
+    * _`path`_
+* [x] `rmSync`
+    * _`path`_
+    * _`options`_
+        * _`force`_
+        * _`recursive`_
+        * _`maxRetries`_
+        * _`retryDelay`_

@@ -1,0 +1,80 @@
+{
+	// Place your jest-mock-fs workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Generate tests for function": {
+		"scope": "javascript, typescript",
+		"prefix": "tfunction",
+		"body": [
+			"const ${1:function} = require(\"../../functions/${1:function}\");",
+			"const { Directory } = require(\"../../utils/filesystem\");",
+			"",
+			"describe('Testing ${1:function}', () => {",
+			"",
+			"\ttest('Expecting ${1:function} to be a function', () => {",
+			"\t\texpect(typeof ${1:function}).toBe(\"function\");",
+			"\t});",
+			"",
+			"\ttest('Expecting ${1:function} to return jest function', () => {",
+			"\t\tlet fn = ${1:function}(new Directory('root', {",
+			"\t\t\t'file.ext': \"HELLO!\",",
+			"\t\t\t'anotherpath': {",
+			"\t\t\t\t'file.ext': \"ANOTHERHELLO!\"",
+			"\t\t\t}",
+			"\t\t}));",
+			"",
+			"\t\texpect(typeof fn).toBe(\"function\");",
+			"\t\texpect(fn._isMockFunction).toBe(true);",
+			"\t});",
+			"",
+			"\tdescribe('Testing mock function', () => {",
+			"",
+			"\t\ttest('Expecting mock function to return correct result', () => {",
+			"\t\t\tlet fs = new Directory('root', {",
+			"\t\t\t\t'file.ext': \"HELLO!\",",
+			"\t\t\t\t'anotherpath': {",
+			"\t\t\t\t\t'file.ext': \"ANOTHERHELLO!\"",
+			"\t\t\t\t}",
+			"\t\t\t});",
+			"\t\t\tlet fn = ${1:function}(fs);",
+			"\t\t\t${2:let result = }fn('${3:path}');",
+			"",
+			"\t\t\texpect(${4:result}).toStrictEqual(${5:testexpectation});",
+			"${6:\t\t\tother tests}",
+			"\t\t});",
+			"",
+			"\t\ttest('Expecting mock function to capture mock data', () => {",
+			"\t\t\tlet fs = new Directory('root', {",
+			"\t\t\t\t'file.ext': \"HELLO!\",",
+			"\t\t\t\t'anotherpath': {",
+			"\t\t\t\t\t'file.ext': \"ANOTHERHELLO!\"",
+			"\t\t\t\t}",
+			"\t\t\t});",
+			"\t\t\tlet fn = ${1:function}(fs);",
+			"\t\t\t${2:let result = }fn('${3:path}');",
+			"",
+			"\t\t\texpect(fn).toBeCalled();",
+			"\t\t\texpect(fn).toBeCalledWith(\"${3:path}\");",
+			"\t\t\texpect(fn).toHaveReturned();",
+			"\t\t\texpect(fn).toHaveReturnedWith(${5:testexpectation});",
+			"\t\t});",
+			"",
+			"\t});",
+			"",
+			"});",
+		]
+	}
+}
