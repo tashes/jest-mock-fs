@@ -133,6 +133,70 @@ function checkConfigString (item) {
     return [ true, null ];
 }
 
+function checkRmsyncOptions (value) {
+    try {
+        expect(value).to.be.a('object');
+        expect(value).to.have.property('force');
+        let [ forceCheck, forceCheckError ] = checkRmsyncOptionsForce(value.force);
+        if (forceCheck === false) throw forceCheckError;
+        expect(value).to.have.property('maxRetries');
+        let [ maxRetriesCheck, maxRetriesCheckError ] = checkRmsyncOptionsMaxretries(value.maxRetries);
+        if (maxRetriesCheck === false) throw maxRetriesCheckError;
+        expect(value).to.have.property('recursive');
+        let [ recursiveCheck, recursiveCheckError ] = checkRmsyncOptionsRecursive(value.recursive);
+        if (recursiveCheck === false) throw recursiveCheckError;
+        expect(value).to.have.property('retryDelay');
+        let [ retrydelayCheck, retrydelayCheckError ] = checkRmsyncOptionsRetrydelay(value.retryDelay);
+        if (retrydelayCheck === false) throw retrydelayCheckError;
+    }
+    catch (e) {
+        return [ false, e ];
+    };
+    return [ true, null ]
+};
+
+function checkRmsyncOptionsForce (value) {
+    try {
+        expect(value).to.be.a('boolean');
+    }
+    catch (e) {
+        return [false, e];
+    };
+    return [ true, null ];
+};
+
+function checkRmsyncOptionsMaxretries (value) {
+    try {
+        expect(value).to.be.a('number');
+        expect(value).to.be.greaterThanOrEqual(0);
+    }
+    catch (e) {
+        return [ false, e ];
+    }
+    return [ true, null ];
+};
+
+function checkRmsyncOptionsRecursive (value) {
+    try {
+        expect(value).to.be.a('boolean');
+    }
+    catch (e) {
+        return [ false, e ];
+    }
+    return [ true, null ];
+};
+
+function checkRmsyncOptionsRetrydelay (value) {
+    try {
+        expect(value).to.be.a('number');
+        expect(value).to.be.greaterThanOrEqual(0);
+    }
+    catch (e) {
+        return [ false, e ];
+    }
+    return [ true, null ];
+};
+
 module.exports = {
     isObject,
     isString,
@@ -143,5 +207,7 @@ module.exports = {
     checkConfigItem,
     checkConfigContents,
     checkConfigBuffer,
-    checkConfigString
+    checkConfigString,
+
+    checkRmsyncOptions
 };
