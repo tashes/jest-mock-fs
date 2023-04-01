@@ -8,15 +8,16 @@ This package will create a jest mock factory function to allow you to mock a fil
 To use it, import it and call it like so:
 
 ```javascript
-const mockFS = require('jest-mock-fs');
+const jestMockFs = require('jest-mock-fs');
 
-jest.mock('fs', mockFS({
+var mockFs = jestMockFs({
     'folder': {
         'file.ext': "contents",
         'anotherfile.ext': new Buffer()
     },
     'file.txt': "othercontents"
-}));
+});
+jest.mock('fs', () => ({ ...mockFs }));
 ```
 
 The following fs functions have been mocked till now:

@@ -1,3 +1,5 @@
+const { jest: j } = require('@jest/globals');
+
 const { isObject, isString, checkConfigPath } = require("./checks");
 const { extname, basename } = require('path');
 
@@ -90,7 +92,24 @@ class Directory {
 
 };
 
+class Stats {
+
+    constructor (obj) {
+        this.obj = obj;
+    };
+
+    get isFile () {
+        return j.fn(() => this.obj instanceof File);
+    }
+
+    get isDirectory () {
+        return j.fn(() => this.obj instanceof Directory);
+    }
+
+}
+
 module.exports = {
     Directory,
-    File
+    File,
+    Stats
 };

@@ -1,4 +1,4 @@
-const { File, Directory } = require("../../utils/filesystem");
+const { File, Directory, Stats } = require("../../utils/filesystem");
 
 describe('Testing File', () => {
 
@@ -177,6 +177,62 @@ describe('Testing Directory', () => {
                 }
             });
         });
+
+    });
+
+});
+
+describe('Testing stats', () => {
+
+    describe('Testing constructor', () => {
+
+        test('Expecting constructor to return instance of Stats', () => {
+            let file = new File('newfile.ext', "HELLO!");
+            let stats = new Stats(file);
+
+            expect(stats).toBeInstanceOf(Stats);
+        });
+
+        test('Expecting stats instance to have correct properties', () => {
+            let file = new File('newfile.ext', "HELLO!");
+            let stats = new Stats(file);
+
+            expect(stats).toHaveProperty('obj');
+        });
+
+        test('Expecting stats properties to be valid', () => {
+            let file = new File('newfile.ext', "HELLO!");
+            let stats = new Stats(file);
+
+            expect(stats.obj).toBe(file);
+        });
+
+    });
+
+    describe('Testing isFile', () => {
+
+        test('Expecting correct values to return correct values', () => {
+            let file = new File('newfile.ext', "HELLO!");
+            let stats = new Stats(file);
+
+            expect(stats.isFile()).toBe(true);
+        });
+
+    });
+
+    describe('Testing isDirectory', () => {
+
+        test('Expecting correct values to return correct values', () => {
+            let directory = new Directory('newdirectory', {
+                'file.ext': "HELLO!",
+                'anotherpath': {
+                    'file.ext': "ANOTHERHELLO!"
+                }
+            });
+            let stats = new Stats(directory);
+
+            expect(stats.isDirectory()).toBe(true);
+        })
 
     });
 
