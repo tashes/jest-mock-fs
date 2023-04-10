@@ -8,6 +8,7 @@ const unlinkSync = require('./functions/unlinkSync.js');
 const readdirSync = require('./functions/readdirSync.js');
 const mkdirSync = require('./functions/mkdirSync.js');
 const rmSync = require('./functions/rmSync.js');
+const lstatSync = require('./functions/lstatSync');
 
 module.exports = function (config) {
     let [ configCheck, configCheckError ] = checkConfig(config);
@@ -23,6 +24,7 @@ module.exports = function (config) {
         readdirSync: readdirSync(fs),
         mkdirSync: mkdirSync(fs),
         rmSync: rmSync(fs),
+        lstatSync: lstatSync(fs),
         _fs: fs
     };
 }

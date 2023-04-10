@@ -6,6 +6,7 @@ function componentize (path) {
     path = normalize(path);
     // split path into components
     let components = path.split(sep);
+    if (components[0] === "") components.shift();
     
     return components;
 };
