@@ -2,6 +2,7 @@ const { jest: j } = require('@jest/globals');
 
 const { isObject, isString, checkConfigPath } = require("./checks");
 const { extname, basename } = require('path');
+const { errorWithState } = require('./errorize');
 
 class File {
 
@@ -29,6 +30,12 @@ class File {
 
     toObject () {
         return this.contents;
+    }
+
+    toString (r = "") {
+        return [
+            `${ r }|- ${ this.name }`
+        ].join('\n');
     }
 
 };
@@ -76,7 +83,7 @@ class Directory {
     transverse (next, err = true) {
         let path = this.paths.indexOf(next);
         if (next === -1) {
-            if (err) throw new Error("invalid path", next);
+            if (err) throw new Error(errorWithState(`invalid path: ${next}`));
             else return false;
         }
         return this.contents[path];
@@ -88,6 +95,14 @@ class Directory {
             return ass;
         }, {});
         return obj;
+    }
+
+    toString (r = "") {
+        let contents = this.contents.map(content => content.toString(`  ${ r }`));
+        return [
+            `${ r }|- ${ this.name }`,
+            ...contents
+        ].join('\n');
     }
 
 };

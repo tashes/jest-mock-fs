@@ -4,6 +4,8 @@ const { checkConfigFullPath } = require('../utils/checks');
 const { Directory, File } = require('../utils/filesystem');
 const { componentize } = require('../utils/path');
 
+const { errorWithState } = require('../utils/errorize');
+
 module.exports = function (fs) {
 
     return j.fn((path) => {
@@ -29,10 +31,10 @@ module.exports = function (fs) {
 
         if (!(parent instanceof Directory)) {
             if (obj instanceof File) {
-                throw new Error('cannot create new directory in file');
+                throw new Error(errorWithState(`Cannot create new directory in file.`, fs));
             }
             else {
-                throw new Error('invalid folder');
+                throw new Error(errorWithState('invalid folder', fs));
             }
         }
 

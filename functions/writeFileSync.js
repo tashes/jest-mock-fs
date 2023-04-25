@@ -1,6 +1,7 @@
 const { jest: j } = require('@jest/globals');
 
 const { checkConfigFullPath, checkConfigContents } = require('../utils/checks');
+const { errorWithState } = require('../utils/errorize');
 const { Directory, File } = require('../utils/filesystem');
 const { componentize } = require('../utils/path');
 
@@ -36,13 +37,14 @@ module.exports = function (fs) {
 
         if (!(obj instanceof File)) {
             if (obj instanceof Directory) {
-                throw new Error('EISDIR: illegal operation on a directory, read <directory>');
+                throw new Error(errorWithState('EISDIR: illegal operation on a directory, read <directory>', fs));
             }
             else {
                 // Create file here
                 let name = components[components.length - 1];
                 let file = new File(name, contents);
                 parent.add(file);
+                obj = file;
             }
         }
 

@@ -1,4 +1,6 @@
 # jest-mock-fs
+Github: https://github.com/tashes/jest-mock-fs
+
 Install this package using:
 ```
 npm install jest-mock-fs

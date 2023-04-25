@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { errorWithState } = require('./errorize');
 
 function isObject (item) {
     try {
@@ -84,7 +85,7 @@ function checkConfigItem (item) {
             if (objCheck === false) throw objCheckError;
         }
         else {
-            throw new Error('invalid config item');
+            throw new Error(errorWithState('invalid config item', fs));
         }
     }
     catch (e) {
@@ -104,7 +105,7 @@ function checkConfigContents (item) {
             if (stringCheck === false) throw stringCheckError;
         }
         else {
-            throw new Error('invalid config contents');
+            throw new Error(errorWithState('invalid config contents', fs));
         }
     }
     catch (e) {

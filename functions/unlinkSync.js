@@ -1,6 +1,7 @@
 const { jest: j } = require('@jest/globals');
 
 const { checkConfigFullPath } = require('../utils/checks');
+const { errorWithState } = require('../utils/errorize');
 const {Directory, File } = require('../utils/filesystem');
 const { componentize } = require('../utils/path');
 
@@ -21,10 +22,10 @@ module.exports = function (fs) {
 
         if (!(obj instanceof File)) {
             if (obj instanceof Directory) {
-                throw new Error('EISDIR: illegal operation on a directory, unlink <directory>');
+                throw new Error(errorWithState('EISDIR: illegal operation on a directory, unlink <directory>', fs));
             }
             else {
-                throw new Error('invalid file');
+                throw new Error(errorWithState('invalid file', fs));
             }
         }
 

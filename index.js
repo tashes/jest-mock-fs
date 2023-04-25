@@ -25,7 +25,13 @@ module.exports = function (config) {
         mkdirSync: mkdirSync(fs),
         rmSync: rmSync(fs),
         lstatSync: lstatSync(fs),
-        _fs: fs
+        _fs: fs,
+        _reconfigure: (newconfig) => {
+            let [ configCheck, configCheckError ] = checkConfig(newconfig);
+            if (configCheck === false) throw configCheckError;
+
+            fs = new Directory('root', newconfig);
+        }
     };
 }
 

@@ -1,6 +1,7 @@
 const { jest: j } = require('@jest/globals');
 
 const { checkConfigFullPath } = require('../utils/checks');
+const { errorWithState } = require('../utils/errorize');
 const { Directory, File } = require('../utils/filesystem');
 const { componentize } = require('../utils/path');
 
@@ -26,10 +27,10 @@ module.exports = function (fs) {
 
         if (!(obj instanceof Directory)) {
             if (obj instanceof File) {
-                throw new Error('Cannot read directory');
+                throw new Error(errorWithState('Cannot read directory', fs));
             }
             else {
-                throw new Error('invalid directory');
+                throw new Error(errorWithState('invalid directory', fs));
             }
         }
 
